@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulting Inside — Consultoría a su alcance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --gray: #999;
+    --light-gray: #e8e8e3;
+    --accent: #1a1a1a;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    filter: invert(1);
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--white);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    font-weight: 500 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    transition: background 0.3s, color 0.3s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--gray) !important;
+    color: var(--white) !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    padding-top: 90px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px 80px 80px;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gray);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gray);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: var(--gray);
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 52px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    padding: 16px 36px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--light-gray);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    color: var(--gray);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+  }
+
+  .btn-secondary:hover { color: var(--white); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 340px;
+    height: 340px;
+  }
+
+  .hero-circle {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: spin 20s linear infinite;
+  }
+
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    width: 8px; height: 8px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-circle:nth-child(2) {
+    inset: 30px;
+    animation-direction: reverse;
+    animation-duration: 15s;
+    border-color: rgba(255,255,255,0.06);
+  }
+
+  .hero-circle:nth-child(3) {
+    inset: 60px;
+    animation-duration: 25s;
+    border-color: rgba(255,255,255,0.04);
+  }
+
+  .hero-logo-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .hero-logo-center img {
+    width: 225px;
+    filter: invert(1);
+    opacity: 0.9;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 60px; left: 0; right: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hero-stat {
+    padding: 32px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 0;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 64px;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  .marquee-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--gray);
+    border-radius: 50%;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 120px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    max-width: 480px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gray);
+  }
+
+  .section-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.8;
+    max-width: 320px;
+    text-align: right;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .service-card {
+    background: var(--black);
+    padding: 52px 44px;
+    transition: background 0.4s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    z-index: 0;
+  }
+
+  .service-card:hover::before { transform: translateY(0); }
+
+  .service-card:hover .service-num,
+  .service-card:hover .service-name,
+  .service-card:hover .service-desc,
+  .service-card:hover .service-icon { color: var(--black); }
+
+  .service-card > * { position: relative; z-index: 1; }
+
+  .service-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    margin-bottom: 32px;
+    font-weight: 500;
+    transition: color 0.4s;
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    display: block;
+    transition: color 0.4s;
+  }
+
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    transition: color 0.4s;
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.8;
+    transition: color 0.4s;
+  }
+
+  /* ── HOW ── */
+  .how {
+    padding: 120px 80px;
+    background: var(--white);
+    color: var(--black);
+  }
+
+  .how .section-tag { color: #888; }
+  .how .section-title { color: var(--black); }
+  .how .section-title em { color: #888; }
+  .how .section-desc { color: #666; }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 72px;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .how-step {
+    padding: 52px 40px;
+    border-right: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+  }
+
+  .how-step:last-child { border-right: none; }
+
+  .how-step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(0,0,0,0.06);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .how-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--black);
+  }
+
+  .how-step-desc {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.8;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .testimonial-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  .testimonial-quote::before {
+    content: '"';
+    display: block;
+    font-size: 6rem;
+    line-height: 0.6;
+    color: rgba(255,255,255,0.1);
+    margin-bottom: 24px;
+  }
+
+  .testimonial-author {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .author-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .author-info-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .author-info-role {
+    font-size: 0.78rem;
+    color: var(--gray);
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 160px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+
+  .cta-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 7rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-title em { font-style: italic; color: var(--gray); }
+
+  .cta-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 60px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand img {
+    width: 30px;
+    filter: invert(1);
+    opacity: 0.7;
+  }
+
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: var(--gray);
+    line-height: 1.6;
+    max-width: 260px;
+  }
+
+  .footer-col-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 24px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    padding: 24px 80px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── FACTURACION ELECTRONICA HIGHLIGHT ── */
+  .fe-highlight {
+    grid-column: 1 / -1;
+    background: var(--white);
+    color: var(--black);
+    padding: 52px 44px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fe-highlight::before {
+    content: 'NUEVO';
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    background: var(--black);
+    color: var(--white);
+    padding: 4px 10px;
+  }
+
+  .fe-highlight-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  .fe-highlight-body {}
+
+  .fe-highlight-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .fe-highlight-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.1;
+    color: var(--black);
+  }
+
+  .fe-highlight-desc {
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.8;
+    max-width: 620px;
+  }
+
+  .fe-pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .fe-pill {
+    padding: 6px 16px;
+    border: 1px solid rgba(0,0,0,0.15);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .fe-pill.filled {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  .fe-highlight-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  /* ── FE SECTION ── */
+  .fe-section {
+    padding: 120px 80px;
+    background: var(--white);
+    color: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fe-section::before {
+    content: 'FE';
+    position: absolute;
+    right: -20px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 28rem;
+    font-weight: 900;
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .fe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(0,0,0,0.08);
+    margin-top: 72px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fe-card {
+    background: var(--white);
+    padding: 60px 52px;
+    position: relative;
+    transition: background 0.4s;
+  }
+
+  .fe-card:hover {
+    background: var(--black);
+  }
+
+  .fe-card:hover .fe-card-num,
+  .fe-card:hover .fe-card-title,
+  .fe-card:hover .fe-card-desc,
+  .fe-card:hover .fe-card-feat { color: var(--white); }
+
+  .fe-card:hover .fe-card-feat-dot { background: var(--white); }
+
+  .fe-card-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 32px;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  .fe-card:hover .fe-card-badge {
+    background: var(--white);
+    color: var(--black);
+  }
+
+  .fe-card-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #888;
+    margin-bottom: 16px;
+    transition: color 0.4s;
+  }
+
+  .fe-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    color: var(--black);
+    transition: color 0.4s;
+  }
+
+  .fe-card-desc {
+    font-size: 0.86rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    transition: color 0.4s;
+  }
+
+  .fe-card-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fe-card-feat {
+    font-size: 0.8rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.4s;
+  }
+
+  .fe-card-feat-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--black);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.4s;
+  }
+
+  .fe-compliance {
+    margin-top: 52px;
+    padding: 32px 40px;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fe-compliance-icon { font-size: 2.5rem; }
+
+  .fe-compliance-text {}
+
+  .fe-compliance-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+
+  .fe-compliance-desc {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 100px 24px 40px; }
+    .hero-right { display: none; }
+    .hero-stats { position: static; grid-template-columns: repeat(3, 1fr); }
+    .services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .how { padding: 80px 24px; }
+    .how-steps { grid-template-columns: 1fr 1fr; }
+    .testimonial { padding: 80px 24px; grid-template-columns: 1fr; }
+    .cta-section { padding: 100px 24px; }
+    .cta-title { font-size: clamp(2.5rem, 8vw, 5rem); }
+    footer { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    .section-header { flex-direction: column; gap: 24px; align-items: flex-start; }
+    .section-desc { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- SVG inline logo (monitor + person icon style) -->
+   <img src="logo.png" alt="Consulting Inside Logo">
+    <span class="nav-brand">Consulting Inside</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#facturacion">Facturación Electrónica</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#contacto" class="nav-cta">Agendar llamada</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Consultoría tecnológica de alto impacto</p>
+    <h1 class="hero-title">
+      Soluciones que<br>
+      <em>transforman</em><br>
+      su negocio
+    </h1>
+    <p class="hero-subtitle">
+      Diseñamos, desarrollamos e implementamos sistemas empresariales a medida — desde ERPs hasta aplicaciones web — con un enfoque en eficiencia, trazabilidad y resultados reales.
+    </p>
+    <div class="hero-ctas">
+      
+      <a href="#servicios" class="btn-secondary">Ver servicios →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-circle"></div>
+      <div class="hero-circle"></div>
+      <div class="hero-circle"></div>
+      <div class="hero-logo-center">
+        <img src="logo.png"  alt="Consulting Inside Logo">
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">50+</span>
+      <span class="hero-stat-label">Proyectos entregados</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">98%</span>
+      <span class="hero-stat-label">Satisfacción de clientes</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">5+</span>
+      <span class="hero-stat-label">Años de experiencia</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Desarrollo de Software <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Integración ERP <span class="marquee-dot"></span></span>
+    <span class="marquee-item">✦ Facturación Electrónica El Salvador <span class="marquee-dot"></span></span>
+    <span class="marquee-item">SQL Server <span class="marquee-dot"></span></span>
+    <span class="marquee-item">ASP.NET Core <span class="marquee-dot"></span></span>
+    <span class="marquee-item">✦ Integración FE con ERP <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Arquitectura de Sistemas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Consultoría Empresarial <span class="marquee-dot"></span></span>
+    <span class="marquee-item">El Salvador · Guatemala <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Desarrollo de Software <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Integración ERP <span class="marquee-dot"></span></span>
+    <span class="marquee-item">✦ Facturación Electrónica El Salvador <span class="marquee-dot"></span></span>
+    <span class="marquee-item">SQL Server <span class="marquee-dot"></span></span>
+    <span class="marquee-item">ASP.NET Core <span class="marquee-dot"></span></span>
+    <span class="marquee-item">✦ Integración FE con ERP <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Arquitectura de Sistemas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Consultoría Empresarial <span class="marquee-dot"></span></span>
+    <span class="marquee-item">El Salvador · Guatemala <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-tag">Lo que hacemos</p>
+      <h2 class="section-title">Servicios diseñados<br>para <em>crecer</em></h2>
+    </div>
+    <p class="section-desc">Cada solución es construida desde cero, adaptada a los procesos únicos de su empresa.</p>
+  </div>
+
+  <div class="services-grid">
+    <!-- FACTURACION ELECTRONICA HIGHLIGHT -->
+    <div class="fe-highlight reveal">
+      <div class="fe-highlight-icon">🧾</div>
+      <div class="fe-highlight-body">
+        <p class="fe-highlight-num">DESTACADO</p>
+        <h3 class="fe-highlight-name">Facturación Electrónica — El Salvador</h3>
+        <p class="fe-highlight-desc">Solución 100% compatible con el esquema del Ministerio de Hacienda de El Salvador. Disponible como sistema independiente o integrada directamente a su ERP actual.</p>
+        <div class="fe-pills">
+          <span class="fe-pill filled">Sistema propio</span>
+          <span class="fe-pill filled">Integración ERP</span>
+          <span class="fe-pill">MH El Salvador</span>
+          <span class="fe-pill">Softland</span>
+          <span class="fe-pill">API REST</span>
+          <span class="fe-pill">JSON / XML DTE</span>
+        </div>
+      </div>
+      <div class="fe-highlight-cta">
+        <a href="#facturacion" class="btn-primary" style="white-space:nowrap">Ver detalles →</a>
+        <a href="#contacto" class="btn-secondary">Solicitar demo</a>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <p class="service-num">01</p>
+      <span class="service-icon">⚙️</span>
+      <h3 class="service-name">Sistemas ERP a Medida</h3>
+      <p class="service-desc">Integramos y personalizamos plataformas ERP como Softland, adaptando módulos de CxC, CxP y actividades comerciales a sus flujos reales.</p>
+    </div>
+    <div class="service-card reveal">
+      <p class="service-num">02</p>
+      <span class="service-icon">🌐</span>
+      <h3 class="service-name">Aplicaciones Web</h3>
+      <p class="service-desc">Desarrollamos aplicaciones MVC con .NET, optimizadas para rendimiento, escalabilidad y experiencia de usuario empresarial.</p>
+    </div>
+    <div class="service-card reveal">
+      <p class="service-num">03</p>
+      <span class="service-icon">🗄️</span>
+      <h3 class="service-name">Bases de Datos & SQL Server</h3>
+      <p class="service-desc">Diseño, optimización y modelado de bases de datos SQL Server, incluyendo vistas, stored procedures y reportería avanzada.</p>
+    </div>
+    <div class="service-card reveal">
+      <p class="service-num">04</p>
+      <span class="service-icon">📋</span>
+      <h3 class="service-name">Arquitectura de Sistemas</h3>
+      <p class="service-desc">Definimos la arquitectura técnica de su proyecto antes de escribir una sola línea de código, garantizando solidez y mantenibilidad.</p>
+    </div>
+    <div class="service-card reveal">
+      <p class="service-num">05</p>
+      <span class="service-icon">🔗</span>
+      <h3 class="service-name">Integraciones & APIs</h3>
+      <p class="service-desc">Conectamos sus sistemas existentes con nuevas plataformas mediante APIs robustas y flujos de datos seguros y trazables.</p>
+    </div>
+    <div class="service-card reveal">
+      <p class="service-num">06</p>
+      <span class="service-icon">📊</span>
+      <h3 class="service-name">Consultoría Estratégica</h3>
+      <p class="service-desc">Analizamos sus procesos actuales e identificamos oportunidades de automatización y mejora que impacten directamente en su resultado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FACTURACION ELECTRONICA SECTION -->
+<section class="fe-section" id="facturacion">
+  <div class="section-header reveal" style="border-bottom-color:rgba(0,0,0,0.08);">
+    <div>
+      <p class="section-tag" style="color:#888">El Salvador — Ministerio de Hacienda</p>
+      <h2 class="section-title" style="color:#000">Facturación<br><em style="color:#888">Electrónica</em></h2>
+    </div>
+    <p class="section-desc" style="color:#666; text-align:right;">Dos modalidades para que su empresa cumpla con la normativa vigente de la forma que mejor se adapte a su realidad.</p>
+  </div>
+
+  <div class="fe-grid">
+    <!-- MODALIDAD 1: SISTEMA PROPIO -->
+    <div class="fe-card reveal">
+      <span class="fe-card-badge">Modalidad 1</span>
+      <p class="fe-card-num">SISTEMA INDEPENDIENTE</p>
+      <h3 class="fe-card-title">Plataforma propia<br>lista para usar</h3>
+      <p class="fe-card-desc">¿No tiene ERP o prefiere una solución separada? Le entregamos un sistema completo de Facturación Electrónica, listo para operar desde el primer día, sin depender de ningún otro software.</p>
+      <div class="fe-card-features">
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Emisión de DTEs: CCF, Factura, NC, ND</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Firma electrónica y transmisión al MH</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Gestión de clientes y catálogos</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Reportes y consulta de documentos emitidos</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Entorno de pruebas (staging MH) incluido</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Código fuente 100% de su propiedad</div>
+      </div>
+    </div>
+
+    <!-- MODALIDAD 2: INTEGRACION ERP -->
+    <div class="fe-card reveal">
+      <span class="fe-card-badge">Modalidad 2</span>
+      <p class="fe-card-num">INTEGRACIÓN CON ERP</p>
+      <h3 class="fe-card-title">Integrada a su<br>ERP actual</h3>
+      <p class="fe-card-desc">¿Ya usa Softland u otro ERP? Integramos la Facturación Electrónica directamente dentro de su flujo actual de facturación, sin cambiar la manera en que trabajan sus usuarios.</p>
+      <div class="fe-card-features">
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Integración directa con Softland ERP</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Emisión automática desde el proceso de venta</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Sin doble captura de datos</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Sincronización de clientes y productos</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Trazabilidad contable completa</div>
+        <div class="fe-card-feat"><span class="fe-card-feat-dot"></span>Compatible con otros ERPs vía API REST</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fe-compliance reveal">
+    <div class="fe-compliance-icon">🏛️</div>
+    <div class="fe-compliance-text">
+      <p class="fe-compliance-title">Cumplimiento normativo garantizado — Ministerio de Hacienda El Salvador</p>
+      <p class="fe-compliance-desc">Nuestra solución está alineada con los esquemas JSON/XML del MH, incluye firma electrónica, contingencia offline y transmisión en tiempo real. Actualizaciones normativas incluidas.</p>
+    </div>
+    <a href="#contacto" class="btn-primary" style="background:#000;color:#fff;white-space:nowrap;flex-shrink:0;">Agendar demo →</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="proceso">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-tag" style="color:#888">Nuestro proceso</p>
+      <h2 class="section-title" style="color:#000">Simple, <em style="color:#888">transparente</em><br>y enfocado</h2>
+    </div>
+    <p class="section-desc">Sin sorpresas. Siempre sabemos dónde estamos y hacia dónde vamos.</p>
+  </div>
+  <div class="how-steps">
+    <div class="how-step reveal">
+      <div class="how-step-num">01</div>
+      <h3 class="how-step-title">Diagnóstico</h3>
+      <p class="how-step-desc">Escuchamos y analizamos sus procesos actuales, identificando las fricciones y oportunidades de mejora más importantes.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-step-num">02</div>
+      <h3 class="how-step-title">Propuesta técnica</h3>
+      <p class="how-step-desc">Entregamos un documento de arquitectura detallado con fases, esfuerzo estimado, stack tecnológico y condiciones comerciales claras.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-step-num">03</div>
+      <h3 class="how-step-title">Desarrollo</h3>
+      <p class="how-step-desc">Ejecutamos por fases, con entregas incrementales y comunicación constante. Usted siempre sabe el estado del proyecto.</p>
+    </div>
+    <div class="how-step reveal" style="border-right:none">
+      <div class="how-step-num">04</div>
+      <h3 class="how-step-title">Entrega & Soporte</h3>
+      <p class="how-step-desc">Entregamos código fuente completo, documentación y garantía post-entrega. Su sistema es suyo al 100%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial" id="clientes">
+  <div class="reveal">
+    <p class="testimonial-label">Clientes que confían en nosotros</p>
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div style="padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+        <p style="font-size:1.1rem;font-weight:500;">IDECOM</p>
+        <p style="font-size:0.8rem;color:var(--gray); margin-top:4px;">El Salvador · Guatemala</p>
+      </div>
+      <div style="padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+        <p style="font-size:1.1rem;font-weight:500;">Empresas del sector comercial</p>
+        <p style="font-size:0.8rem;color:var(--gray); margin-top:4px;">Centroamérica</p>
+      </div>
+      <div style="padding:20px 0;">
+        <p style="font-size:1.1rem;font-weight:500;">Distribuidoras & ERP</p>
+        <p style="font-size:0.8rem;color:var(--gray); margin-top:4px;">Softland · SQL Server</p>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <blockquote class="testimonial-quote">
+      Consulting Inside transformó completamente nuestra gestión de actividades comerciales. Lo que antes tomaba días de trabajo manual, ahora es automático y trazable.
+    </blockquote>
+    <div class="testimonial-author">
+      <div class="author-avatar">G</div>
+      <div>
+        <p class="author-info-name">Gerente de Operaciones</p>
+        <p class="author-info-role">IDECOM — El Salvador</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacto">
+  <p class="cta-tag reveal">Empecemos hoy</p>
+  <h2 class="cta-title reveal">
+    ¿Listo para<br>
+    <em>dar el paso?</em>
+  </h2>
+  <div class="cta-actions reveal">
+    <a href="mailto:info@consultinginside.com" class="btn-primary">Solicitar consulta gratis</a>
+    <a href="https://wa.me/50300000000" class="btn-outline">WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">
+      <svg width="28" height="28" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="26" width="48" height="32" rx="4" stroke="white" stroke-width="4" opacity="0.6"/>
+        <line x1="32" y1="58" x2="32" y2="68" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+        <line x1="22" y1="68" x2="42" y2="68" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="52" cy="16" r="8" stroke="white" stroke-width="3.5" opacity="0.6"/>
+        <path d="M43 36c0-4.5 4-8 9-8s9 3.5 9 8" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <span class="footer-brand-name">Consulting Inside</span>
+    </div>
+    <p class="footer-tagline">Consultoría a su alcance — El Salvador & Guatemala</p>
+  </div>
+  <div>
+    <p class="footer-col-title">Servicios</p>
+    <ul class="footer-links">
+      <li><a href="#facturacion">✦ Facturación Electrónica SV</a></li>
+      <li><a href="#">Sistemas ERP</a></li>
+      <li><a href="#">Aplicaciones Web</a></li>
+      <li><a href="#">Bases de Datos</a></li>
+      <li><a href="#">Arquitectura de Sistemas</a></li>
+      <li><a href="#">Consultoría Estratégica</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Contacto</p>
+    <ul class="footer-links">
+      <li><a href="mailto:info@consultinginside.com">info@consultinginside.com</a></li>
+      <li><a href="#">WhatsApp</a></li>
+      <li><a href="#">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2026 Consulting Inside. Todos los derechos reservados.</span>
+  <span class="footer-copy">Hecho con precisión — El Salvador</span>
+</div>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 40) {
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.12)';
+    } else {
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    }
+  });
+</script>
+</body>
+</html>
